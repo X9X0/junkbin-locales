@@ -1,0 +1,65 @@
+name: Sync translations to main repo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'frontend/locales/**'
+      - 'backend/locale/**'
+
+jobs:
+  sync:
+    # Skip commits made by the sync bot itself (avoids feedback loops)
+    if: "!contains(github.event.head_commit.message, '[skip ci]')"
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Clone main repo
+        run: |
+          git clone https://x-access-token:${{ secrets.MAIN_REPO_TOKEN }}@github.com/X9X0/junkbin.io.git /tmp/main
+
+      - name: Copy translated locale files
+        run: |
+          # Frontend JSON — all non-English languages
+          for lang in fr es pt de it nl pl cs sk hr sr sl ru uk ro hu tr; do
+            if [ -d "frontend/locales/$lang" ]; then
+              mkdir -p /tmp/main/frontend/public/locales/$lang
+              cp -r frontend/locales/$lang/. /tmp/main/frontend/public/locales/$lang/
+            fi
+          done
+          # Backend .po files — all languages
+          rsync -av --include="*.po" --exclude="*.mo" \
+            backend/locale/ /tmp/main/backend/locale/
+
+      - name: Create pull request on main repo
+        env:
+          MAIN_REPO_TOKEN: ${{ secrets.MAIN_REPO_TOKEN }}
+        run: |
+          cd /tmp/main
+          git config user.name "weblate-sync[bot]"
+          git config user.email "weblate-sync[bot]@users.noreply.github.com"
+
+          BRANCH="translations/weblate-$(date +%Y%m%d-%H%M%S)"
+          git checkout -b "$BRANCH"
+          git add frontend/public/locales/ backend/locale/
+
+          if git diff --staged --quiet; then
+            echo "No translation changes — nothing to PR."
+            exit 0
+          fi
+
+          git commit -m "Update translations from Weblate"
+          git push origin "$BRANCH"
+
+          curl -s -X POST \
+            -H "Authorization: Bearer $MAIN_REPO_TOKEN" \
+            -H "Accept: application/vnd.github+json" \
+            https://api.github.com/repos/X9X0/junkbin.io/pulls \
+            -d "{
+              \"title\": \"Update translations from Weblate\",
+              \"body\": \"Automated translation sync from Weblate.\\n\\nReview and merge to publish updated locale files to production.\",
+              \"head\": \"$BRANCH\",
+              \"base\": \"main\"
+            }"
