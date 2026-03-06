@@ -27,6 +27,11 @@ jobs:
             if [ -d "frontend/locales/$lang" ]; then
               mkdir -p /tmp/main/frontend/public/locales/$lang
               cp -r frontend/locales/$lang/. /tmp/main/frontend/public/locales/$lang/
+              # Ensure filename matches i18n loadPath (translation.json not translations.json)
+              if [ -f "/tmp/main/frontend/public/locales/$lang/translations.json" ]; then
+                mv /tmp/main/frontend/public/locales/$lang/translations.json \
+                   /tmp/main/frontend/public/locales/$lang/translation.json
+              fi
             fi
           done
           # Backend .po files — all languages
