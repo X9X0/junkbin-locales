@@ -117,7 +117,7 @@
         "email_placeholder": "enter_email@domain.com",
         "notify_me": "POWIADOM MNIE",
         "subscribing": "TRWA REJESTRACJA...",
-        "subscription_confirmed": "SUBSCRIPTION_CONFIRMED — Otrzymasz powiadomienie w momencie premiery.",
+        "subscription_confirmed": "SUBSCRIPTION_CONFIRMED — Subskrypcja została potwierdzona! Poinformujemy Cię o nowych funkcjach lub wydarzeniach.",
         "db_status": "// STAN BAZY DANYCH:",
         "db_online": "W&#xA0;LINII",
         "stats_products": "PRODUKTY",
@@ -344,7 +344,8 @@
             "error_session_expired": "Twoja sesja wygasła. Spróbuj przesłać plik ponownie.",
             "error_rate_limited": "Zbyt wiele plików przesłano — proszę chwilę poczekać i spróbować ponownie.",
             "type_user_manual": "Instrukcja obsługi"
-        }
+        },
+        "type_user_manual": "Instrukcja obsługi"
     },
     "recipes": {
         "title": "PRZEPISY PROJEKTOWE",
