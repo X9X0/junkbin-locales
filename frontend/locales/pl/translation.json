@@ -26,7 +26,7 @@
         "search_mobile_placeholder": "Wyszukaj...",
         "no_results_for": "Brak wyników dla „{{query}}”",
         "view_all_results": "Zobacz wszystkie {{count}} wyniki →",
-        "right_to_repair": "<ph id=\"mtc_1\" ctype=\"x-html\" equiv-text=\"base64:Jmx0O2cgeD0xIGlkPSI4NTgiJmd0Ow==\"/>Prawo do naprawy</g>.",
+        "right_to_repair": "PRAWO DO NAPRAWY",
         "submit_new": "+ PRZEŚLIJ NOWE",
         "my_junkbin_upper": "MÓJ KOSZ"
     },
@@ -1019,7 +1019,7 @@
         "explore_contribute": "Przyczynia się",
         "explore_news": "Co nowego",
         "community": "SPOŁECZNOŚĆ",
-        "community_r2r": "<ph id=\"mtc_1\" ctype=\"x-html\" equiv-text=\"base64:Jmx0O2cgeD0xIGlkPSI4NTgiJmd0Ow==\"/>Prawo do naprawy</g>.",
+        "community_r2r": "Prawo do naprawy",
         "community_ifixit": "iFixit",
         "community_guidelines": "Wytyczne",
         "community_docs": "Dokumentacja",
